@@ -10,7 +10,6 @@ class UserProfile(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=20, choices=USER_TYPES, default='advertiser')
-    # avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Временно отключено
     rating = models.FloatField(default=5.0)
 
     def __str__(self):
