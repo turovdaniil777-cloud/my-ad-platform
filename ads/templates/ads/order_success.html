@@ -1,0 +1,20 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-success">✅</h2>
+                <h3>Заявка успешно отправлена!</h3>
+                <p>Ваша заявка на размещение рекламы была отправлена владельцу площадки.</p>
+                <p>Ожидайте ответа в вашем личном кабинете.</p>
+                <div class="mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-primary">На главную</a>
+                    <a href="{% url 'my_orders' %}" class="btn btn-outline-primary">Мои заявки</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

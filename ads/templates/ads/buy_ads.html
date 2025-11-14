@@ -1,0 +1,56 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'home' %}" style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">🛒 Купить рекламу</h1>
+</div>
+
+<!-- Создать объявление -->
+{% if user.is_authenticated %}
+<div class="card-wallet">
+    <a href="{% url 'create_ad' %}" class="menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">Создать объявление о покупке</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+{% else %}
+<div class="card-wallet">
+    <a href="{% url 'register' %}" class="menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">Создать объявление о покупке</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+{% endif %}
+
+<!-- Список объявлений -->
+<div class="section-title">Предложения продажи</div>
+
+{% for ad in ads %}
+<div class="ad-card">
+    <div class="ad-title">{{ ad.title }}</div>
+    <div class="ad-description">{{ ad.description|truncatewords:20 }}</div>
+    <div class="ad-meta">
+        <span class="badge-category">{{ ad.get_category_display }}</span>
+        <span class="ad-budget">${{ ad.budget }}</span>
+    </div>
+</div>
+{% empty %}
+<div class="empty-state">
+    <div class="empty-icon">📭</div>
+    <div>Пока нет объявлений о продаже</div>
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_ad' %}" style="color: var(--tg-primary); margin-top: 10px; display: inline-block;">
+        Создать первое объявление
+    </a>
+    {% else %}
+    <a href="{% url 'register' %}" style="color: var(--tg-primary); margin-top: 10px; display: inline-block;">
+        Зарегистрироваться
+    </a>
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

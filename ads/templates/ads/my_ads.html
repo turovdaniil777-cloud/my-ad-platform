@@ -1,0 +1,48 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'home' %}" style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">📋 Мои объявления</h1>
+</div>
+
+<!-- Создать объявление -->
+<div class="card-wallet">
+    <a href="{% url 'create_ad' %}" class="menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">Создать объявление</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+
+<!-- Мои объявления -->
+<div class="section-title">Активные объявления</div>
+
+{% for ad in my_ads %}
+<div class="ad-card">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+        <span class="badge-category">
+            {% if ad.ad_type == 'buy' %}🛒 Покупка{% else %}💰 Продажа{% endif %}
+        </span>
+        <span style="font-size: 12px; color: var(--tg-text-secondary);">
+            {{ ad.created_at|date:"d.m.Y" }}
+        </span>
+    </div>
+    <div class="ad-title">{{ ad.title }}</div>
+    <div class="ad-description">{{ ad.description|truncatewords:15 }}</div>
+    <div class="ad-meta">
+        <span class="badge-category">{{ ad.get_category_display }}</span>
+        <span class="ad-budget">${{ ad.budget }}</span>
+    </div>
+</div>
+{% empty %}
+<div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div>У вас пока нет объявлений</div>
+    <a href="{% url 'create_ad' %}" style="color: var(--tg-primary); margin-top: 10px; display: inline-block;">
+        Создать первое объявление
+    </a>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% if ad.ad_type == 'buy' %}{% url 'sell_ads' %}{% else %}{% url 'buy_ads' %}{% endif %}" 
+       style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">
+        {% if ad.ad_type == 'buy' %}🛒{% else %}💰{% endif %}
+        {{ ad.title }}
+    </h1>
+</div>
+
+<div class="card-wallet">
+    <div style="padding: 20px;">
+        <!-- Заголовок и категория -->
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+            <span class="badge-category">
+                {% if ad.ad_type == 'buy' %}🛒 Покупка{% else %}💰 Продажа{% endif %}
+            </span>
+            <span class="badge-category">{{ ad.get_category_display }}</span>
+        </div>
+        
+        <!-- Описание -->
+        <div style="margin-bottom: 20px;">
+            <div style="font-size: 15px; line-height: 1.5; color: var(--tg-text);">
+                {{ ad.description }}
+            </div>
+        </div>
+        
+        <!-- Бюджет -->
+        <div style="background: rgba(61, 126, 235, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+            <div style="font-size: 13px; color: var(--tg-text-secondary); margin-bottom: 5px;">Бюджет</div>
+            <div style="font-size: 24px; font-weight: 600; color: var(--tg-primary);">${{ ad.budget }}</div>
+        </div>
+        
+        <!-- Контакты -->
+        <div style="background: var(--tg-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+            <div style="font-size: 13px; color: var(--tg-text-secondary); margin-bottom: 5px;">Контактная информация</div>
+            <div style="font-size: 15px; color: var(--tg-text);">{{ ad.contact_info }}</div>
+        </div>
+        
+        <!-- Автор -->
+        <div style="font-size: 13px; color: var(--tg-text-secondary); text-align: center;">
+            Автор: {{ ad.owner.user.username }} • {{ ad.created_at|date:"d.m.Y в H:i" }}
+        </div>
+    </div>
+</div>
+{% endblock %}

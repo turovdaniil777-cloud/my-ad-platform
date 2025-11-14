@@ -1,0 +1,110 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- P2P Маркет -->
+<div class="section-title">P2P Маркет</div>
+<div class="card-wallet">
+    <div class="menu-item">
+        <div class="menu-text">Обменивайте рекламу напрямую у других пользователей</div>
+    </div>
+</div>
+
+<!-- Основные кнопки -->
+<a href="{% url 'buy_ads' %}" class="btn-wallet" style="display: block; text-decoration: none; text-align: center;">
+    🛒 Купить рекламу
+</a>
+
+<a href="{% url 'sell_ads' %}" class="btn-wallet-outline" style="display: block; text-decoration: none; text-align: center;">
+    💰 Продать рекламу
+</a>
+
+<div class="divider"></div>
+
+<!-- Остальной код остается без изменений -->
+<div class="section-title">Мои объявления</div>
+<div class="card-wallet">
+    {% if user.is_authenticated %}
+    <a href="{% url 'my_ads' %}" class="menu-item">
+        <div class="menu-icon">📋</div>
+        <div class="menu-text">Настройки объявлений и платежей</div>
+        <div class="menu-arrow">›</div>
+    </a>
+    
+    <a href="{% url 'create_ad' %}" class="menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">Создать объявление</div>
+        <div class="menu-arrow">›</div>
+    </a>
+    {% else %}
+    <a href="{% url 'register' %}" class="menu-item">
+        <div class="menu-icon">📋</div>
+        <div class="menu-text">Настройки объявлений и платежей</div>
+        <div class="menu-arrow">›</div>
+    </a>
+    
+    <a href="{% url 'register' %}" class="menu-item">
+        <div class="menu-icon">➕</div>
+        <div class="menu-text">Создать объявление</div>
+        <div class="menu-arrow">›</div>
+    </a>
+    {% endif %}
+</div>
+
+<!-- Дополнительное меню -->
+<div class="card-wallet">
+    <div class="menu-item">
+        <div class="menu-icon">🔔</div>
+        <div class="menu-text">Уведомления</div>
+        <div class="menu-arrow">›</div>
+    </div>
+    
+    <div class="menu-item">
+        <div class="menu-icon">❓</div>
+        <div class="menu-text">FAQ</div>
+        <div class="menu-arrow">›</div>
+    </div>
+    
+    <a href="#" class="menu-item">
+        <div class="menu-icon">🤝</div>
+        <div class="menu-text">Мои сделки</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+
+<!-- Активные сделки -->
+<div class="section-title">Активные</div>
+<div class="card-wallet">
+    <div class="menu-item">
+        <div class="menu-text" style="text-align: center; color: var(--tg-text-secondary);">
+            Здесь появятся ваши сделки
+        </div>
+    </div>
+</div>
+
+<!-- Авторизация -->
+{% if not user.is_authenticated %}
+<div class="divider"></div>
+<div class="card-wallet">
+    <a href="{% url 'login' %}" class="menu-item">
+        <div class="menu-icon">🔐</div>
+        <div class="menu-text">Войти в аккаунт</div>
+        <div class="menu-arrow">›</div>
+    </a>
+    
+    <a href="{% url 'register' %}" class="menu-item">
+        <div class="menu-icon">📝</div>
+        <div class="menu-text">Зарегистрироваться</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+{% else %}
+<div class="divider"></div>
+<div class="card-wallet">
+    <a href="{% url 'logout' %}" class="menu-item">
+        <div class="menu-icon">🚪</div>
+        <div class="menu-text">Выйти ({{ user.username }})</div>
+        <div class="menu-arrow">›</div>
+    </a>
+</div>
+{% endif %}
+{% endblock %}

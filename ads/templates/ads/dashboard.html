@@ -1,0 +1,84 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Личный кабинет</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ user.username }}</h5>
+                <p class="card-text">
+                    <span class="badge bg-primary">{{ user_profile.get_user_type_display }}</span>
+                </p>
+                <p class="card-text">
+                    <strong>Рейтинг:</strong> {{ user_profile.rating }}/5.0
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        {% if user_profile.user_type == 'publisher' %}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Мои площадки</h5>
+            </div>
+            <div class="card-body">
+                {% if my_sites %}
+                    <p>У вас {{ my_sites.count }} площадок</p>
+                    <div class="list-group">
+                        {% for site in my_sites|slice:":3" %}
+                        <a href="{% url 'site_detail' site.id %}" class="list-group-item list-group-item-action">
+                            {{ site.title }} - ${{ site.price }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% if my_sites.count > 3 %}
+                    <div class="mt-3">
+                        <a href="{% url 'my_sites' %}" class="btn btn-outline-primary">Все площадки</a>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <p>У вас пока нет площадок</p>
+                    <a href="{% url 'add_site' %}" class="btn btn-primary">Добавить первую площадку</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Мои заявки</h5>
+            </div>
+            <div class="card-body">
+                {% if my_orders %}
+                    <p>У вас {{ my_orders.count }} активных заявок</p>
+                    <div class="list-group">
+                        {% for order in my_orders|slice:":3" %}
+                        <div class="list-group-item">
+                            {{ order.site.title }} - 
+                            {% if order.status == 'pending' %}
+                                <span class="badge bg-warning">На рассмотрении</span>
+                            {% elif order.status == 'approved' %}
+                                <span class="badge bg-success">Одобрено</span>
+                            {% else %}
+                                <span class="badge bg-danger">Отклонено</span>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if my_orders.count > 3 %}
+                    <div class="mt-3">
+                        <a href="{% url 'my_orders' %}" class="btn btn-outline-primary">Все заявки</a>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <p>У вас пока нет заявок</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">Найти площадки</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

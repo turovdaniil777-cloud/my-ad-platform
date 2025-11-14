@@ -1,0 +1,41 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'home' %}" style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">🔐 Вход</h1>
+</div>
+
+<div class="card-wallet">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="padding: 20px;">
+            <!-- Имя пользователя -->
+            <div style="margin-bottom: 20px;">
+                <input type="text" name="username" class="form-control" placeholder="Имя пользователя" required
+                       style="background: var(--tg-card); border: 1px solid var(--tg-border); color: var(--tg-text); padding: 12px; border-radius: 8px;">
+            </div>
+            
+            <!-- Пароль -->
+            <div style="margin-bottom: 25px;">
+                <input type="password" name="password" class="form-control" placeholder="Пароль" required
+                       style="background: var(--tg-card); border: 1px solid var(--tg-border); color: var(--tg-text); padding: 12px; border-radius: 8px;">
+            </div>
+            
+            <!-- Кнопка -->
+            <button type="submit" class="btn-wallet">
+                Войти
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Ссылка на регистрацию -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'register' %}" style="color: var(--tg-primary); text-decoration: none; font-size: 14px;">
+        Нет аккаунта? Зарегистрироваться
+    </a>
+</div>
+{% endblock %}

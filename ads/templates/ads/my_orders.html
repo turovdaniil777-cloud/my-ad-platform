@@ -1,0 +1,42 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Мои заявки</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Площадка</th>
+                <th>Статус</th>
+                <th>Дата подачи</th>
+                <th>Сообщение</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.site.title }}</td>
+                <td>
+                    {% if order.status == 'pending' %}
+                        <span class="badge bg-warning">На рассмотрении</span>
+                    {% elif order.status == 'approved' %}
+                        <span class="badge bg-success">Одобрено</span>
+                    {% else %}
+                        <span class="badge bg-danger">Отклонено</span>
+                    {% endif %}
+                </td>
+                <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ order.message|truncatewords:10 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">У вас пока нет заявок</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

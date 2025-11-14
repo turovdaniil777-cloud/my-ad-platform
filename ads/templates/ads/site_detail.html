@@ -1,0 +1,62 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>{{ site.title }}</h1>
+        <p><strong>URL:</strong> <a href="{{ site.url }}" target="_blank">{{ site.url }}</a></p>
+        <p><strong>Описание:</strong></p>
+        <p>{{ site.description }}</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Статистика</h5>
+                        <p><strong>Категория:</strong> {{ site.get_category_display }}</p>
+                        <p><strong>Посетителей в день:</strong> {{ site.daily_visitors }}</p>
+                        <p><strong>Цена за размещение:</strong> ${{ site.price }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Владелец</h5>
+                        <p><strong>Имя:</strong> {{ site.owner.user.username }}</p>
+                        <p><strong>Рейтинг:</strong> {{ site.owner.rating }}/5.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        {% if can_order %}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Подать заявку на размещение</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.message.label_tag }}
+                        {{ form.message }}
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+        {% elif not user.is_authenticated %}
+        <div class="card">
+            <div class="card-body text-center">
+                <p>Для подачи заявки необходимо войти в систему</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary">Регистрация</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

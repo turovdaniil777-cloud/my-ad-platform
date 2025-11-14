@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertising Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --tg-bg: #1e2732;
+            --tg-card: #2a3a4d;
+            --tg-primary: #3d7eeb;
+            --tg-secondary: #5686d4;
+            --tg-text: #ffffff;
+            --tg-text-secondary: #8a9aa8;
+            --tg-border: #344457;
+        }
+        
+        body {
+            background: var(--tg-bg);
+            color: var(--tg-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .wallet-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--tg-border);
+            margin-bottom: 20px;
+        }
+        
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--tg-text);
+            margin: 0;
+        }
+        
+        .app-subtitle {
+            font-size: 14px;
+            color: var(--tg-text-secondary);
+            margin: 5px 0 0 0;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--tg-text);
+            margin: 25px 0 15px 0;
+            padding: 0 10px;
+        }
+        
+        .card-wallet {
+            background: var(--tg-card);
+            border-radius: 16px;
+            border: 1px solid var(--tg-border);
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .card-wallet:hover {
+            background: #2f4157;
+        }
+        
+        .btn-wallet {
+            background: var(--tg-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-wallet:hover {
+            background: var(--tg-secondary);
+            transform: translateY(-1px);
+        }
+        
+        .btn-wallet-outline {
+            background: transparent;
+            color: var(--tg-primary);
+            border: 1.5px solid var(--tg-primary);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-wallet-outline:hover {
+            background: rgba(61, 126, 235, 0.1);
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            color: var(--tg-text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--tg-border);
+            transition: background 0.2s ease;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:hover {
+            background: #2f4157;
+            color: var(--tg-text);
+            text-decoration: none;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+        
+        .menu-text {
+            flex: 1;
+            font-size: 16px;
+        }
+        
+        .menu-arrow {
+            color: var(--tg-text-secondary);
+            font-size: 14px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--tg-border);
+            margin: 20px 0;
+        }
+        
+        .ad-card {
+            background: var(--tg-card);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid var(--tg-border);
+        }
+        
+        .ad-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--tg-text);
+        }
+        
+        .ad-description {
+            font-size: 14px;
+            color: var(--tg-text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .ad-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--tg-text-secondary);
+        }
+        
+        .ad-budget {
+            color: var(--tg-primary);
+            font-weight: 500;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--tg-text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .badge-category {
+            background: rgba(61, 126, 235, 0.2);
+            color: var(--tg-primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="wallet-container">
+        <div class="header">
+            <h1 class="app-title">Advertising Platform</h1>
+            <p class="app-subtitle">P2P Платформа для рекламы</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-3" role="alert" 
+                     style="background: var(--tg-card); color: var(--tg-text); border: 1px solid var(--tg-border);">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" 
+                            style="filter: invert(1);"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

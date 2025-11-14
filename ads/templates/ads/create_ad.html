@@ -1,0 +1,70 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'my_ads' %}" style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">📝 Создать объявление</h1>
+</div>
+
+<div class="card-wallet">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="padding: 16px;">
+            <!-- Тип объявления -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Тип объявления
+                </label>
+                {{ form.ad_type }}
+            </div>
+            
+            <!-- Заголовок -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Заголовок
+                </label>
+                {{ form.title }}
+            </div>
+            
+            <!-- Описание -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Описание
+                </label>
+                {{ form.description }}
+            </div>
+            
+            <!-- Категория -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Категория
+                </label>
+                {{ form.category }}
+            </div>
+            
+            <!-- Бюджет -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Бюджет ($)
+                </label>
+                {{ form.budget }}
+            </div>
+            
+            <!-- Контакты -->
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--tg-text-secondary);">
+                    Контактная информация
+                </label>
+                {{ form.contact_info }}
+            </div>
+            
+            <!-- Кнопка -->
+            <button type="submit" class="btn-wallet">
+                Опубликовать объявление
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'ads/base.html' %}
+
+{% block content %}
+<!-- Заголовок -->
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'home' %}" style="color: var(--tg-text); margin-right: 15px; text-decoration: none;">‹</a>
+    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">📝 Регистрация</h1>
+</div>
+
+<div class="card-wallet">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="padding: 20px;">
+            <!-- Имя пользователя -->
+            <div style="margin-bottom: 20px;">
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div style="color: #ff6b6b; font-size: 12px; margin-top: 5px;">
+                    {{ form.username.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Пароль -->
+            <div style="margin-bottom: 20px;">
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                <div style="color: #ff6b6b; font-size: 12px; margin-top: 5px;">
+                    {{ form.password1.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Подтверждение пароля -->
+            <div style="margin-bottom: 25px;">
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                <div style="color: #ff6b6b; font-size: 12px; margin-top: 5px;">
+                    {{ form.password2.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Кнопка -->
+            <button type="submit" class="btn-wallet">
+                Зарегистрироваться
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Ссылка на вход -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'login' %}" style="color: var(--tg-primary); text-decoration: none; font-size: 14px;">
+        Уже есть аккаунт? Войти
+    </a>
+</div>
+{% endblock %}
